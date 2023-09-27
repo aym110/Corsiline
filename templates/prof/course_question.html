@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <title>Question</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js ' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+</head>
+<body>
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Chargement ...</span>
+        </div>
+    </div>
+<section>
+<div class="container" style="padding-left:60px;width:60%;">
+    <h2 class="wlc3">Details question:</h2>
+    <div class="rowx">
+        <label >Text : <b>{{ question.text }}</b></label>
+</div>
+
+
+<div class="rowx">
+        <label>Note : <b>{{ question.note }} point</b></label> 
+</div>
+<hr>
+<div class="rowx">
+    <h2 class="wlc3">Choix : </h2>
+</div> 
+{% if choix == 0 %}
+<div class="rowx">
+    <label>Aucun choix trouvée</label>  
+</div>
+{% else %}
+{% for choice,nb in choix %}
+<div class="rowx">
+    <div class="col-25">
+        {% if choice.correct == True %} <h6 class="inkadd" style="width:80px;">Correct</h6> {% else %} <h6 class="inkdel" style="width:80px;">Incorrect</h6> {% endif %} 
+</div> 
+    <div class="col-75">
+        <label>Choix {{nb}} : <b>{{ choice.text }}</b></label>
+
+</div>
+</div>
+{% endfor %}
+{% endif %}
+</div>
+
+<center><button class="ink" onclick="history.back()">Retour</button></center>
+</section>
+</body>
+</html>
+{% endblock content %}

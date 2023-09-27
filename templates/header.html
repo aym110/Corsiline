@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">-->
+    <link rel="stylesheet" href="{% static 'css/stylenav.css' %}">
+    <title>Corsiline-nav</title>
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="check-btn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <label class="logo">Corsiline</label>
+        <ul>
+            <li><a class="active" href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'homeProf' %}">Cours</a></li>
+            <li><a href="{% url 'profil' %}">Profil</a></li>
+            <li><a href="{% url 'contactUs' %}">Contact</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

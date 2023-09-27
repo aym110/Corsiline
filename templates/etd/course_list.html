@@ -1,0 +1,147 @@
+{% include 'headerEtd.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+      <meta charset="utf-8">
+      <title>E-LEARNING - eLearning HTML Template</title>
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <meta content="" name="keywords">
+      <meta content="" name="description">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+   <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+      <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"> 
+      <link href="{% static 'css/style2.css' %}" rel="stylesheet">     
+      <link href="{% static 'css/onlinecourse/style.css' %}" rel="stylesheet"> 
+      
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+      <script src="{% static 'lib/easing/easing.min.js ' %}"></script>
+      <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+      <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'js/main.js' %}"></script>
+  </head>
+  
+  <body>
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Chargement ...</span>
+        </div>
+    </div>
+    <!--
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+      <a href="" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+          <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>Corsiline</h2>
+      </a>
+      <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav ms-auto p-4 p-lg-0">
+              <a href="{% url 'indexEtd' %}" class="nav-item nav-link active">Home</a>
+              <a href="{% url 'coursesEtd' %}" class="nav-item nav-link">Courses</a>
+              <a  class="nav-item nav-link">Contact</a>
+          </div>
+          <div class="nav-item dropdown">
+              <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">{{ user.prenom }} {{ user.nom }}<i class="fa fa-arrow-right ms-3"></i></a>
+              <div class="dropdown-menu fade-down m-0"> 
+              <a href="{% url 'logout' %}" class="nav-item nav-link active">Logout</a>
+              <a href="{% url 'profilEtd' %}" class="nav-item nav-link active">Profile</a>  
+        </div>
+  </nav>
+-->
+<!---
+<section>
+{% if courses  %}
+        <div class="container horizontal-container" style="margin-top: 50px;">
+            <div class="card-deck">
+                {% for course,nb in courses %}
+                         <div class="card horizontal-item" style="width: 25rem;" style="margin-top: 20px;">
+                          <img class="card-img-left" src="{{course.photo.url}}" width="150px" height="180px" alt="Course image"></img>
+                          <div class="card-body bg-light" >
+                              <h5 class="card-title">{{ course.titre }}, <span class="text-success">
+                                  {{ nb }} inscriptions</span></h5>
+                            <p class="card-text">{{ course.description}}</p>
+                            <a href="{{course.fichier.url}}">Course {{ course.titre }} (PDF)</a>
+                            <form  action="{% url 'inscrit' course.id %}" method="post" >
+                                  {% csrf_token %}
+                                  <input class="btn btn-primary"  type="submit"
+                                         value="{{nb}}" style="width: 100px;">
+                            </form>
+                          </div>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p>No courses are available.</p>
+    {% endif %}
+    -->
+
+<section>
+    {% if courses  %}
+      <!-- Courses Start -->
+      <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h1 class="mb-5">Cours Disponibles</h1>
+            </div>
+            <div class="row g-4 justify-content-center">
+                {% for course,nb in courses %}
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s" >
+                    <div class="course-item bg-light" >
+                        <div class="position-relative overflow-hidden">
+                            <img class="img-fluid" src="{{ course.photo.url }}" alt="" style="height:200px;width:100%;">
+                            <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
+                                <a href="{{course.fichier.url}}" target="_blank" class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius: 30px 30px 30px 30px;">PDF</a>
+                            </div>
+                        </div>
+                        <div class="text-center p-4 pb-0">
+                            <h3 class="mb-0">{{course.titre}}</h3>
+                            <div class="mb-3" style="height:60px;overflow: auto;">
+                                <small>{{course.description}}</small>
+                            </div>
+                            <!--<h5 class="mb-4">{{ cours.course.titre }}</h5>-->
+
+                            <form  action="{% url 'inscrit' course.id %}" method="post" >
+                                {% csrf_token %}
+                                {% if nb == "termine" %}
+                                <button class="btn btn-sm btn-primary" 
+                                       value="{{nb}}" style="width: 100px;margin-bottom:15px;background:#009933;">{{nb}}</button>
+                                {% elif nb == "continue" %}
+                                <button class="btn btn-sm btn-primary" 
+                                value="{{nb}}" style="width: 100px;margin-bottom:15px;background:#e6b800;">{{nb}}</button>
+                                {% else %}
+                                <button class="btn btn-sm btn-primary" 
+                                value="{{nb}}" style="width: 100px;margin-bottom:15px;">{{nb}}</button>
+                                {% endif %}
+                                       
+                            </form> 
+                        </div>
+                        <div class="d-flex border-top">
+                            <small class="flex-fill text-center border-end py-2" ><i class="fa fa-user-tie text-primary me-2"></i><font color="#0082e6"><b>Enseignant</b></font><div style="font-size:12px;">{{ course.prof.prenom }} {{ course.prof.nom }}</div></small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i><font color="#0082e6"><b>Inscriptions</b></font><div style="font-size:12px;"><b>{{ course.nombreEtds }}</b> Etudiants</div></small>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+               
+            </div>
+        </div>
+    </div>
+    <!-- Courses End -->
+
+    {% else %}
+        <p>No courses are available.</p>
+    {% endif %}
+</section>
+
+
+</body>
+</html>
+

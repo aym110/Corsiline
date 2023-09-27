@@ -1,0 +1,234 @@
+section{
+    background: #ffffff;
+    margin: 15px;
+    padding: 15px 5px;
+    font-size: 18px;
+    padding: 20px;
+    clear: both;
+    height: auto;
+    display:block;
+}
+hr{
+    border: 1px solid cornflowerblue;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+  
+.ink{
+    color: azure;
+    background-color: #0055c5;
+    font-size: 16px;
+    padding: 7px 10px;
+    border-radius: 3px;
+    font-weight: 800;
+    margin-top: 20px;
+    margin-right: 10px;
+}
+.inkadd{
+    color: azure;
+    background-color: #188a27;;
+    font-size: 14px;
+    padding: 7px 10px;
+    width: 300px;
+    border-radius: 3px;
+    font-weight: 800;
+    margin-top: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
+
+.inkdel{
+    color: azure;
+    background-color: rgb(179, 54, 54);;
+    font-size: 14px;
+    padding: 7px 0px;
+    min-width: 300px;
+    border-radius: 3px;
+    font-weight: 800;
+    margin-top: 10px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+.ink2{
+    color: rgb(20, 223, 238);
+    font-size: 20px;
+    padding: 7px 17px;
+    border-radius: 3px;
+    font-weight: 800;
+    margin-top: 20px;
+    margin-right: 10px;
+}
+.inktab{
+    color:  #0082e6;
+    font-size: 16px;
+    padding: 7px 17px;
+    border-radius: 3px;
+    font-weight: 400;
+}
+.profil_title{
+    margin: 20px 5px 10px 10px;
+    color:  azure;
+    font-size: 23px;
+    font-weight: 300;
+    font-style: italic;
+    float: left;
+}
+.profil_titleB{
+    margin: 20px 5px 10px 10px;
+    color: #0082e6 ;
+    font-size: 23px;
+    font-weight: 300;
+    font-style: italic;
+    float: left;
+}
+/*
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+  }*/
+video{
+    height: 450px;
+    width: 1000px;
+    border:2px solid #0055c5;
+    background-color: #0055c5;
+}
+
+body{
+    background: #f7f7f7;
+    /*background: url('static/image/online-courses.jpg') no-repeat;*/
+    background-size: cover;
+
+}
+
+label{
+    color: azure;
+    font-size: 40 px;
+    margin: 10px;
+} 
+label.blue{
+    color: #0082e6;
+
+} 
+input{
+        height: 40px;
+        width: 500px;
+        font-size: fill;    
+
+}
+.center{
+    margin-top: 50px;
+    text-align: center;
+}
+/*******************************************************************/
+.wlc{
+    margin: 10px 0 20px 40px;
+    color:  #0082e6;
+    box-sizing: border-box;
+    position: relative;
+
+
+}
+
+.wlc2{
+    margin: 10px 0 20px 80px;
+    color:  #0082e6;
+    box-sizing: border-box;
+    position: relative;
+
+
+}
+.wlc3{
+    margin: 10px 0 20px 40px;
+    color:  azure;
+    box-sizing: border-box;
+    position: relative;
+
+
+}
+
+h1,h3{
+    color: #0082e6;
+
+}
+
+.row{
+    margin: 0px 5px 20px 5px;
+    content: "";
+    clear: both;
+    width: 100%;
+    display: flex;
+    
+}
+.rowA{
+    margin: 2px 5px 40px 5px;
+    content: "";
+    clear: both;
+    width: fit-content;
+    display: flex;
+    
+}
+.tab_cours{
+    margin: 0px 0px;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+.tab_cours th{
+    color: #0082e6;
+    font-size: large;
+    text-align: center;
+    padding: 4px 0;
+}
+.tab_cours td{
+    font-size: large;
+    text-align: center;
+    padding: 4px 0;
+
+}
+
+.content-table {
+    border-collapse: collapse;
+    margin: 5px 10px;
+    font-size: 0.9em;
+    min-width: 400px;
+    width:100%;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+}
+
+.content-table thead tr {
+    background-color: #0082e6;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #0082e6;
+}
+
+.content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #0082e6;
+}
+h1{
+    color: #f7f7f7;
+}

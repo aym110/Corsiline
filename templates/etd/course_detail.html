@@ -1,0 +1,149 @@
+{% include 'headerEtd.html' %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+          <meta charset="utf-8">
+          <title>E-LEARNING - eLearning HTML Template</title>
+          <meta content="width=device-width, initial-scale=1.0" name="viewport">
+          <meta content="" name="keywords">
+          <meta content="" name="description">
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+          <link href="{% static 'css/onlinecourse/bootstrap.min.css' %}" rel="stylesheet">
+          <link href="{% static 'css/onlinecourse/navStyl.css'   %}" rel="stylesheet">
+          <link href="{% static 'css/style.css'   %}" rel="stylesheet">
+          <link href="{% static 'css/form.css'   %}" rel="stylesheet">
+          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+          <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+          <script src="{% static 'lib/easing/easing.min.js ' %}"></script>
+          <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+          <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+          <script src="{% static 'js/main.js' %}"></script>
+      </head>
+      <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Chargement ...</span>
+        </div>
+    </div>
+      
+      <body><!--
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+          <a href="" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+              <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>Corsiline</h2>
+          </a>
+          <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+              <div class="navbar-nav ms-auto p-4 p-lg-0">
+                  <a href="{% url 'indexEtd' %}" class="nav-item nav-link active">Home</a>
+                  <a href="{% url 'coursesEtd' %}" class="nav-item nav-link">Courses</a>
+                  <a href="contact.html" class="nav-item nav-link">Contact</a>
+              </div>
+              <div class="nav-item dropdown">
+                  <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">{{ user.prenom }} {{ user.nom }}<i class="fa fa-arrow-right ms-3"></i></a>
+                  <div class="dropdown-menu fade-down m-0"> 
+                  <a href="{% url 'logout' %}" class="nav-item nav-link active">Logout</a> 
+                  <a href="{% url 'profilEtd' %}" class="nav-item nav-link active">Profile</a> 
+            </div>
+      </nav>-->
+    <!-- Page content -->
+    <section>
+    <center>
+    <div id="chapter" class="container-fluid" style="display: block;">
+            <h2 class="ink" style="width:50%;font-size:40px;margin-top:0px;margin-bottom:20px;">{{ course.titre }}</h2>
+            <div class="card-columns-vertical">
+                {% for chapter in course.chapter_set.all %}
+                    <div class="card mt-1">
+                        <div class="card-header"><h5 class="ink" >Chapter {{ forloop.counter }} : {{chapter.titre}}</h5></div>
+                        <div class="card-body"><b>Description : </b>{{chapter.description}}</div>
+                        <div class="card-body">
+                            <video controls>
+                            <source src="{{chapter.video.url}}" type="video/mp4"></source>
+                            </video>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Task: show questions and choices -->
+            <!-- <HINT> Use Bootstrap Collapse to hide exam first, more details could be found here
+            https://www.w3schools.com/bootstrap4/bootstrap_collapse.asp-->
+
+            <!--
+
+            A collapse example here:
+            <div id="exam" class="collapse">
+                Click to expand elements within the collapse div
+                </div>
+
+            -->
+            <button id="start" data-toggle="collapse" data-target="#exam"
+                 class="inkadd" role="button" style="margin-top: 10px;">Quiz</button>
+    
+                 <button class="inkdel" role="button" id="des">Désinscrire</button>
+                 <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var button = document.getElementById('des');
+                        button.addEventListener('click', function() {
+                          var confirmed = confirm('Confirmez votre choix ??');
+                          if (confirmed) {
+                            window.location.href = '{% url 'desinscrire' course.id %}';  // Replace with your desired URL
+                          }
+                        });
+                      });
+                 </script>
+    </div>
+            <div id="exam" class="collapse" style="display: none;">
+                
+                    <form id="questionform" action="{% url 'submit' course.id %}" method="post">
+                         {% for question in course.question_set.all %}
+                        <div class="card mt-1" style="padding:15px 0px;">                         
+
+                            <div class="card-header">
+                                <h5 class="ink">Question {{ forloop.counter }} : {{question.text}}</h5>
+                            </div>
+                            {% csrf_token %}
+                            <div class="container" style="font-size:20px;width:60%;">
+                                {% for choice in question.choice_set.all %}
+                                    <div class="form-check">
+                                        <div class="rowx">
+                                        <div class="col-25">
+                                            <label><b>Choix {{ forloop.counter }}:</b></label>
+                                        </div>
+                                        <div class="col-75">
+                                        <label class="form-check-label" style="float:left;">
+                                            <input type="checkbox" name="choice_{{choice.id}}" class="form-check-input" id="{{choice.id}}"value="{{choice.id}}">
+                                            {{ choice.text }}
+                                        </label>
+                                        </div>
+                                        </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>                        
+                        {% endfor %}
+                        <br>
+                         <button class="btn btn-success btn-block" type="submit" style="width: 10%; margin-top: 10px;" onclick="return confirm('Confirmez votre choix ?')">Envoyer</button>
+                        </form>       
+                        <button class="btn btn-secondary" style="width: 10%; margin-top: 10px;" onclick="location.reload()">Annuler</button>
+
+            </div>
+        </center>
+    </section>
+        <script>
+            chapter = document.getElementById("chapter");
+            question = document.getElementById("exam");
+            start = document.getElementById("start")
+            start.addEventListener('click', function() {               
+                chapter.style.display = "none";
+                question.style.display = "block";
+          });
+
+        </script>
+        
+
+   
+</body>
+</html>

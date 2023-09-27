@@ -1,0 +1,110 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js ' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+</head>
+<body>
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Chargement ...</span>
+        </div>
+    </div>
+<section>
+<div class="row">
+<h3 class="wlc">Bienvenu, Pr.{{ teacher.nom }} {{ teacher.prenom }}</h3>
+</div>
+<div class="row">
+    <h5 style="color:#0082e6" class="profil_title">Mes cours : </h5>
+</div>
+{% if courses == 0 %} 
+<div class="row">
+<label class="wlc">Vous n'avez pas encore publié un cours </label>
+</div>
+<br>
+{% else %}
+<div class="row">
+    <table class="content-table">
+    <thead>
+    <tr>
+        <th>Titre du cours</th>
+        <th>Categorie du cours</th>
+        <th>Date de publication</th>
+        <th>Nombre de chapitres</th>
+        <th colspan="3" >actions</th> 
+    </tr>
+    </thead>
+    <tbody>
+        {% for course,chapter_count in courses %}
+        <tr>
+            <td>{{ course.titre }}</td>
+            <td>{{ course.categorie }}</td>
+            <td>{{ course.datePub }}</td>
+            <td>{{ chapter_count }}</td>
+            <td><a class="inktab" href=" {% url 'afficherCourse' %}?course_id={{ course.id }} ">Details</a></td>
+            <td><a class="inktab" href=" {% url 'modCourse' %}?course_id={{ course.id }}  ">Modifier</a></td>
+            <td><a class="inktab" href=" {% url 'delCourse' %}?course_id={{ course.id }}  " onclick="return confirm('Voulez-vous supprimer ce cours ?')"> Supprimer</a></td>
+        </tr>
+        {% endfor %}
+      
+    </tbody>
+    </table>
+    
+</div>
+{% endif %}
+<center>
+<div class="rowA">
+<a class="inkadd" href="{% url 'ajoutCours' %}" >Ajouter un cours</a>
+<a class="inkdel" href="{% url 'delAllCourses' %}" onclick="return confirm('Cette action va supprimer tous les cours, vous souhaitez continuer ?')">Supprimer tous les cours</a>
+</div>
+</center>
+<div class="row">
+    <h5 style="color:#0082e6" class="profil_title">Mes etudiants : </h5>
+</div>
+{% if students == 0 %} 
+<div class="row">
+<label class="wlc">Aucun etudiant n'est encore inscrit a vos cours </label>
+</div>
+<br>
+{% else %}
+<div class="row">
+    <table class="content-table">
+    <thead>
+    <tr>
+        <th>Nom d'etudiant</th>
+        <th>Niveau d'etudes</th>
+        <th>Nombre de vos cours au quel il'est inscrit</th>
+       
+    </tr>
+    </thead>    
+    <tbody>
+        {% for student,nbCours in students %}
+        <tr>
+            <td>{{ student.nom }} {{student.prenom}}</td>
+            <td>{{ student.NiveauEtude }}</td>
+            <td>{{ nbCours }}</td>
+        </tr>
+        {% endfor %}
+    
+    </tbody>
+    </table>
+    
+</div>
+{% endif %}
+</section>
+</body>
+</html>
+{% endblock content %}

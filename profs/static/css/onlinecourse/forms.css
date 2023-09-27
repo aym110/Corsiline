@@ -1,0 +1,88 @@
+
+* {
+    box-sizing: border-box;
+}
+  
+input[type=text],input[type=tel],input[type=number],select,textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+  
+label{
+    padding: 0;
+    color: aliceblue;
+    display: inline-block;
+}
+b{
+    color:azure;
+}
+label.sexe{
+    padding: 0px;
+    display: inline-block;
+}
+input[type=radio]{
+    width:30px;
+    height: 16px;
+    resize: vertical;
+    display: inline-block;
+
+
+}
+label.rep{
+    padding: 12px 12px 12px 12px;
+    color: azure;
+    resize: vertical;
+    background-color: #188a27;
+    display: inline-block;
+    height: 100%;
+}
+
+  
+input[type=submit]{
+    background-color: #043eaa;
+    color: white;
+    padding: 0px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+  
+input[type=submit]:hover {
+    background-color: #9ac2e7;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #489bca;
+    padding: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+  
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+  
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+  }
+  
+  /* Clear floats after the columns */
+  .rowx::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 600px) {.col-25, .col-75, input[type=submit]
+    {width: 100%;margin-top: 0;
+    }}

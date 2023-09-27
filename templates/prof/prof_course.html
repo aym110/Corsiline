@@ -1,0 +1,256 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style_profil.css' %}">  
+
+    <title>Cours</title>
+</head>
+<body>
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Chargement ...</span>
+        </div>
+    </div>
+<section>
+
+    <div class="row">
+        <h2 class="wlc2">Details du Cours</h2>
+    </div>
+
+
+    <div class="container">
+        <div class="row gutters">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="account-settings">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <a href="{{ course.photo.url }}" target="_blank"><img src="{{ course.photo.url }}" alt="aucune image trouvée"></a>
+                        </div>
+                        <h5 style="color:#007ae1;" class="usern">{{ course.titre }}</h5>
+                        <h6 class="user-email">{{ course.categorie }}</h6>
+                      
+                </div>
+                    <div class="about">
+                        <h5>Description</h5>
+                        <p>{{course.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="row gutters">
+                   
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="account-settings">
+                          
+                            <div class="about">
+                                <h5>Date de publication</h5>
+                                <h6>{{course.datePub}}</h6>
+                            </div>
+                            <div class="about">
+                                <h5>Nombre de chapitres</h5>
+                                <h6>{{course.nombreChaps}}</h6>
+                            </div>
+                            <div class="about">
+                                <h5>Nombre de questions du Quiz</h5>
+                                <h6>{{course.nombreQues}}</h6>
+                            </div>
+                            <div class="about">
+                                <h5>Nombre d'etudiants inscrits</h5>
+                                <h6>{{course.nombreEtds}}</h6>
+                            </div>
+                          
+                         
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="account-settings">
+                            <div class="user-profile">
+                                <div class="about">
+                                    <h3>Rating Moyen</h3>
+                                    <h1 style="font-size:80px;"><a>{{course.avgRate}}</a></h1>
+                                </div>
+                                <center>
+                                    <hr style="width:60%;">
+                                </center>
+                                <div class="about">
+                                    <h6>Support du cours (PDF)</h6>
+                                    <button style="width:50%;" class="ink" onclick="window.open('{{course.fichier.url}}');" target="_blank">Ouvrir</button>
+                                </div>
+                                
+                              
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+    
+
+    
+<center>
+    <br>
+   <hr>
+</center>
+<div class="row">
+<h3 class="profil_titleB">Chapitres du cours</h3>
+</div>
+{% if chapters == 0 %} 
+<div class="row">
+<label class="blue">Vous n'avez pas encore ajouté des chapitres</label>
+</div>
+{% else %}
+<div class="row">
+    <table class="content-table">
+    <thead>
+    <tr>
+        <th>Numero du chapitre</th>
+        <th>titre du chapitre</th>
+        <th colspan="3" >actions</th> 
+    </tr>
+</thead>
+<tbody>
+        {% for chapitre,num in chapters %}
+        <tr>
+            <td>{{ num }}</td>
+            <td>{{ chapitre.titre }}</td>
+            <td><a class="inktab" href=" {% url 'afficherChapitre' %}?chap_id={{ chapitre.id }} ">Details</a></td>
+            <td><a class="inktab" href=" {% url 'modChapitre' %}?chap_id={{ chapitre.id }} ">Modifier</a></td>
+            <td><a class="inktab" href=" {% url 'delChapitre' %}?chap_id={{ chapitre.id }} " onclick="return confirm('Voulez-vous supprimer ce chapitre ?')"> Supprimer</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+
+
+{% endif %}
+<center>
+<div class="rowA">
+<a class="inkadd" href="{% url 'ajoutChapitre' %}?course_id={{course.id}} " >Ajouter un chapitre</a>
+<a class="inkdel" href="{% url 'delAllChapters' %}?course_id={{course.id}} " onclick="return confirm('Cette action va supprimer tous les chapitres de ce cours, vous souhaitez continuer ?')">Supprimer tous les chapitres</a>
+</div>
+</center>
+
+<br>
+<div class="row">
+<h3 class="profil_titleB">Questions du quiz</h3>
+</div>
+{% if questions == 0 %} 
+<div class="row">
+<label class="blue">Vous n'avez pas encore ajouté des questions</label>
+</div>
+{% else %}
+<div class="row">
+    <table class="content-table">
+    <thead>
+    <tr>
+        <th>Numero du Question</th>
+        <th>Question</th>
+        <th colspan="3" >actions</th> 
+    </tr>
+</thead>
+</tbody>
+        {% for question,num in questions %}
+        <tr>
+            <td>{{ num }}</td>
+            <td>{{ question.text }}</td>
+            <td><a class="inktab" href=" {% url 'afficherQuestion' %}?ques_id={{ question.id }} ">Details</a></td>
+            <td><a class="inktab" href=" {% url 'modQuestion' %}?ques_id={{ question.id }}&course_id={{ course.id }} ">Modifier</a></td>
+            <td><a class="inktab" href=" {% url 'delQuestion' %}?ques_id={{ question.id }} " onclick="return confirm('Voulez-vous supprimer cette question ?')"> Supprimer</a></td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+</div>
+
+{% endif %}
+<center>
+    <div class="rowA">
+<a class="inkadd" href="{% url 'ajoutQuestion' %}?course_id={{course.id}} " >Ajouter une question</a>
+<a class="inkdel" href="{% url 'delAllQuestions' %}?course_id={{course.id}} " onclick="return confirm('Cette action va supprimer tous les questions de ce cours, vous souhaitez continuer ?')">Supprimer tous les questions</a>
+    </div>
+</center>
+<br>
+<div class="row">
+    <h3 class="profil_titleB">Etudiants inscrit</h3>
+</div>
+{% if course.nombreEtds == 0 %} 
+<div class="row">
+<label class="blue">Aucun etudiant n'est inscrit a ce cours</label>
+</div>
+{% else %}
+<div class="row">
+    <table class="content-table">
+    <thead>
+    <tr>
+        <th>Etudiant</th>
+        <th>Date inscription</th>
+        <th>Score Quiz</th> 
+        <th>Status</th> 
+        <th>Rating</th> 
+    </tr>
+</thead>
+</tbody>
+        {% for etd in etds %}
+        <tr>
+            <td>{{ etd.etudiant.prenom }} {{ etd.etudiant.nom }}</td>
+            <td>{{ etd.date_inscription }}</td>
+            {% if etd.score == -1 %}
+            <td>Pas encore</td>
+            {% else %}
+            <td>{{ etd.score }} %</td>
+            {% endif %}
+            {% if etd.rating == -1 %}
+            <td>En cours</td>
+            {% else %}
+            <td>Terminé</td>
+            {% endif %}
+            {% if etd.rating == -1 %}
+            <td>Pas encore</td>
+            {% else %}
+            <td>{{ etd.rating }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+</div>
+
+{% endif %}
+<center>
+<div class="rowA">
+<button style="margin-left:40px;" class="ink" onclick="location.href='{% url 'homeProf' %}';">Retour</button>
+</div>
+</center>
+
+</section>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js ' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+{% endblock content %}

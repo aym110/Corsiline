@@ -1,0 +1,143 @@
+{% include 'headerEtd.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+          <meta charset="utf-8">
+          <title>E-LEARNING - eLearning HTML Template</title>
+          <meta content="width=device-width, initial-scale=1.0" name="viewport">
+          <meta content="" name="keywords">
+          <meta content="" name="description">
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+          <link href="{% static 'css/style.css' %}" rel="stylesheet">
+          <link href="{% static 'css/style2.css' %}" rel="stylesheet">
+          <link href="{% static 'css/form.css' %}" rel="stylesheet">
+          <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+          <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+          <script src="{% static 'lib/easing/easing.min.js ' %}"></script>
+          <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+          <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+          <script src="{% static 'js/main.js' %}"></script>
+      </head>
+      
+      <body>
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Chargement ...</span>
+            </div>
+        </div>
+    <!--
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+          <a href="{% url 'indexEtd' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+              <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>Corsiline</h2>
+          </a>
+          <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+              <div class="navbar-nav ms-auto p-4 p-lg-0">
+                  <a href="{% url 'indexEtd' %}" class="nav-item nav-link active">Home</a>
+                  <a href="{% url 'courses' %}" class="nav-item nav-link">Courses</a>
+                  <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+              </div>
+              <div class="nav-item dropdown">
+                  <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">{{ user.prenom }} {{ user.nom }}<i class="fa fa-arrow-right ms-3"></i></a>
+                  <div class="dropdown-menu fade-down m-0"> 
+                  <a href="{% url 'logout' %}" class="nav-item nav-link active">Logout</a> 
+                  <a href="{% url 'profilEtd' %}" class="nav-item nav-link active">Profile</a> 
+            </div>
+      </nav>
+    -->
+<section>
+<div class="container-fluid" style="padding: 20px;">
+    {% if note >= 80 %}
+    <div class="alert alert-success">
+       <!--HINT Display passed info -->
+       <b>Félicitations, {{user.prenom}} {{user.nom}} ! </b>Vous avez réussi l'examen avec un score de {{note}}%
+    </div>
+        {% else %}
+        <div class="alert alert-danger">
+            <!--HINT Display failed info -->
+            <b>Désolé, {{user.prenom}} {{user.nom}} ! </b>Vous avez échoué, votre score final est {{note}} %, moins de 80 % 
+        </div>
+        <label class="btn btn-link text-danger">Voulez-vous essayer à nouveau ?</label>    
+        <label class="rep" onclick="location.href='{% url 'course_details' course.id %}'">Oui</label><label class="rep" onclick="history.back()" style="background:rgb(179, 54, 54);margin-left:0px;">Non</label>
+
+        {% endif %}
+        <div class="card-columns-vertical mt-1">
+        <div class="card mt-1" style="text-align:center;">
+            <div class="card-header" style=""><h5 class="ink" style="height:100%;margin:0;">Resultas d'examen</h5></div>
+        </div>
+            <!--HINT Display exam results-->
+            {% for question in course.question_set.all %}
+                <div class="card" style="margin: 20px;">
+                    <div class="card-header border-light">
+                        <h5>{{question.text}}</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for choice in question.choice_set.all %}
+                        <ul style="list-style-type:circle;">
+                           {% if choice.correct and choice in choices %}
+                            <li ><p class="card-text" style="color:green"><b>{{choice.text}} = > Reponse correct !</b></p></li>
+                            {% elif choice.correct and choice not in choices %}
+                            <li><p class="card-text" style="color:orange">{{choice.text}} = > Non séléctionné :/ </p><il>
+                            {% elif choice.correct == False and choice in choices %}
+                            <li><p class="card-text" style="color:red">{{choice.text}} = > Reponse fausse :(</p> </li>
+                            {% else %}
+                            <li><p class="card-text" style="color:black">{{choice.text}}</p> </li>
+                            {% endif %}
+                        </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if note >= 80 %}
+        <div class="card mt-1" style="text-align:center;">
+            <div class="card-header" style=""><h5 class="ink" style="height:100%;margin:0;">Rating</h5></div>
+        </div>
+        <div class="card" style="margin: 20px;">
+            <div class="card-header border-light">
+                <h5>Évaluez ce cours pour le terminer</h5>
+            </div>
+        <div class="card-body">
+        <form action="{% url 'rate' course.id %}" method="post">
+        {% csrf_token %}
+        <div class="container" style="font-size:20px;width:70%;">
+        <div class="rowx">
+        <div class="col-25">
+        <label for="rate">De 0 à 5 points</label>
+        </div>
+        <div class="col-75">
+        <input name="rate" type="number" min="0" step="1" max="5" required>
+        </div>
+        </div>
+        <div class="rowx">
+            <div class="col-25">
+            <label for="rate">Commentaire (facultatif)</label>
+            </div>
+            <div class="col-75">
+            <textarea name="cmt"></textarea>
+            </div>
+        </div>
+        <div class="rowx">
+        <input type="submit" value="Terminer" style="width:40%;">
+        </div>
+        </div>
+
+        </form>
+    </div></div>
+        {% else %}
+        <center>
+        <button type="button" class="btn btn-secondary" onclick="history.back()">Retour</button>
+        </center>
+        {% endif %}
+    </div>
+</section>
+
+</body>
+</html>

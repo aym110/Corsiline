@@ -1,0 +1,106 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <title>Ajout cours</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js ' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+</head>
+<body>
+  <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Chargement ...</span>
+    </div>
+</div>
+<section>
+  <div class="rowx">
+    <h1 class="wlc2"><b>Ajouter un cours</b></h1>
+</div>
+<div class="container">
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+   
+    <div class="rowx">
+    <div class="col-25">
+    <label for="id_title">Titre du cours:</label>
+    </div>  
+    <div class="col-75">
+    <input type="text" name="titre" id="id_title" required>
+    </div>
+    </div>
+
+    <div class="rowx">
+      <div class="col-25">
+      <label for="cat">Categorie du cours:</label>
+      </div>  
+      <div class="col-75">
+        <select name="cat" id="cat">
+          {% for c in categories %}
+          <option value="{{c.id}}">{{c.nom}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="rowx">
+    <div class="col-25">
+    <label for="id_description">Description:</label>
+    </div>  
+    <div class="col-75">
+    <textarea name="desc" id="id_description" required></textarea>
+    </div>
+    </div>
+
+    <div class="rowx">
+    <div class="col-25">
+    <label for="support">Support du cours (PDF):</label>
+    </div>
+    <div class="col-75">
+    <input type="file" name="support" accept="application/pdf" required>
+    </div>
+    </div>
+
+    <div class="rowx">
+    <div class="col-25">
+    <label for="id_image">Image:</label>
+    </div>
+    <div class="col-75">
+    <input type="file" name="image" id="id_image" accept="image/*">
+    </div>
+    </div>
+    <div class="rowx">
+        <input type="submit" value="Ajouter Cours"></input>
+    </div>
+  </form>
+</div>
+<br>
+<center>
+{% if course_added %}
+<script>
+    var addChapters = confirm("Cours ajouté avec succès ! Voulez-vous ajouter ses chapitres maintenant?");
+    if (addChapters) {
+      location.href = "{% url 'ajoutChapitre' %}?course_id={{course_id}} ";
+    } else {
+      location.href = "{% url 'homeProf' %}";
+    }
+</script>
+{% endif %}
+
+<button class="ink" onclick="location.href='{% url 'homeProf' %}';">Annuler</button>
+</center>
+</section>
+</body>
+</html>
+{% endblock content %}

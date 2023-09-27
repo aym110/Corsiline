@@ -1,0 +1,153 @@
+{% include 'headerEtd.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <title>Modifier etdil</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js ' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</head>
+<body>
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Chargement ...</span>
+        </div>
+    </div>
+<section>
+    <div class="rowx">
+        <h1 class="wlc2"><b>Modifier Profil</b></h1>
+    </div>
+<div class="container">
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="rowx">
+    <div class="col-25">
+    <label for="nom">Nom:</label>
+    </div>  
+    <div class="col-75">
+    <input type="text" name="nom" id="nom" defaultValue="{{ etd.nom }}" value="{{ etd.nom }}" required>
+    </div>
+    </div>
+
+
+<div class="rowx">
+<div class="col-25">
+<label for="prenom">Prenom:</label>
+</div>  
+<div class="col-75">
+<input type="text" name="prenom" id="prenom" defaultValue="{{ etd.prenom }}" value="{{ etd.prenom }}" required>
+</div>
+</div>
+
+    <div class="rowx">
+    <div class="col-25">
+    <label for="tel">Telephone:</label>
+    </div>  
+    <div class="col-75">
+    <input type="tel" name="tel" id="tel" defaultValue="None" value="{{ etd.telephone }}" pattern="06[0-9]{8}" placeholder="Numero de telephone composé de 10 chiffres" >
+    </div>
+    </div>
+
+    <div class="rowx">
+        <div class="col-25">
+        <label for="linkedin">Lien LinkedIn:</label>
+        </div>  
+        <div class="col-75">
+        <input type="text" name="linkedin" id="linkedin" defaultValue="None" value="{{ etd.linkedin }}" placeholder="lien de votre compte LinkedIn">
+        </div>
+    </div>
+
+        <div class="rowx">
+            <div class="col-25">
+            <label for="twitter">Lien Twitter:</label>
+            </div>  
+            <div class="col-75">
+            <input type="text" name="twitter" id="twitter" defaultValue="None" value="{{ etd.twitter }}" placeholder="lien de votre compte Twitter">
+            </div>
+        </div>
+        
+        <div class="rowx">
+            <div class="col-25">
+            <label for="bio">Niveau d'Etude:</label>
+            </div>  
+            <div class="col-75">
+                <select name="niv" id="niv">
+                    <option value="sans bac"{% if etd.NiveauEtude == 'sans bac' %}selected{% endif %}>Sans Bac</option>
+                    <option value="bac" {% if etd.NiveauEtude == 'bac' %}selected{% endif %}>Niveau Bac</option>
+                    <option value="bac+2" {% if etd.NiveauEtude == 'bac+2' %}selected{% endif %}>Bac+2</option>
+                    <option value="bac+3" {% if etd.NiveauEtude == 'bac+3' %}selected{% endif %}>Bac+3</option>
+                    <option value="bac+5" {% if etd.NiveauEtude == 'bac+5' %}selected{% endif %}>Bac+5</option>
+                  </select>            
+            </div>
+        </div>
+
+        <div class="rowx">
+            <div class="col-25">
+                <label>Sexe:</label>
+            </div>  
+            <div class="col-75">
+            <label class="sexe" for="homme">Homme</label>
+            <input type="radio" id="homme" name="sexe" value="Homme" {% if etd.sexe == 'Homme' %} checked {% endif %}>
+            <label class="sexe" for="femme">Femme</label>
+            <input type="radio" id="femme" name="sexe" value="Femme" {% if etd.sexe == 'Femme' %} checked {% endif %}>
+            </div>
+        </div>
+    <div class="rowx">
+    <div class="col-25">
+    <label>Changer votre photo actuelle ?</label>
+    </div>
+    <div class="col-75">
+    <label class="rep" onclick="img()" id="rep">Oui</label>
+    <input type="file" name="photo" id="photo" style="visibility:hidden;" accept="image/*">
+    </div>
+    </div>
+
+    <div class="rowx">
+        <input type="submit" value="Modifier Profil" onclick="return confirm('Voulez-vous enregistrer les changements ?')">
+    </div>
+  </form>
+</div>
+<br>
+<center>
+{% if profil_mod %}
+<script>
+    alert("Profil modifié avec succès !");
+    window.location.href = "{% url 'profilEtd' %}";
+
+</script>
+{% endif %}
+<script>
+    function img(){
+        if(document.getElementById("rep").innerHTML == "Oui"){
+        document.getElementById("photo").style.visibility = "visible";
+        document.getElementById("rep").innerHTML="Non"
+        document.getElementById("rep").style.background="rgb(179, 54, 54)"
+        }
+        else{   
+        document.getElementById("photo").style.visibility = "hidden";
+        document.getElementById("rep").innerHTML="Oui"
+        document.getElementById("rep").style.background="green"
+        }
+    }
+</script>
+<button class="btn btn-secondary" onclick="history.back()">Annuler</button>
+</center>
+</section>
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</body>
+</html>

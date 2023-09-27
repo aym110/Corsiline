@@ -1,0 +1,69 @@
+
+{% extends 'base.html' %} 
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Profile</title>
+</head>
+<body>
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Chargement ...</span>
+        </div>
+    </div>
+<section>
+
+        <h1 style="margin-bottom: 50px;">Teacher Profile</h1>
+        <img src="{{ teacher.photo.url }}" alt="not found" style="height:300px;width:250px">
+   
+        <h3>Full name</h3>
+        <p>{{ teacher.prenom }} {{ teacher.nom }}</p>
+        <h3>Sexe</h3>
+        <p>{{ teacher.sexe }}</p>
+        <h3>Bio</h3>
+        <p>{{ teacher.bio }}</p>    
+        <h3>Courses Taught</h3>
+        {% if cours == 0 %}
+        <p>Aucun cours pour le moment</p>
+        {% else %}
+        <ul style="list-style-type:circle;">
+            {% for course in cours %}
+            <br>
+            <li><a class="ink" href="{% url 'afficherCourse' %}?course_id={{course.id}}">{{ course.titre }}</a></li>
+            {% endfor %}
+        </ul>  
+        {% endif %}  
+        <h3>Contact Information</h3>
+        <p>Email: {{ teacher.email }}</p>
+        <p>Phone: {{ teacher.telephone }}</p>
+    <h3>Social Media</h3>
+    <p>Twitter: 
+        {% if teacher.twitter is None %}
+        Not found
+        {% else %}
+        <a class="ink2"  href="{{ teacher.twitter }}">{{ teacher.twitter }}</a>
+        {% endif %}
+    </p>
+    <p>LinkedIn: 
+        {% if teacher.twitter is None %}
+        Not found
+        {% else %}
+        <a class="ink2" href="{{ teacher.linkedin }}">{{ teacher.linkedin }}</a>
+        {% endif %}
+    </p>
+<button class="ink" onclick="location.href='{% url 'homeProf' %}';">Retour</button>
+<button class="ink" onclick="location.href='{% url 'modProfil' %}';">Modifier</button>
+</section>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js ' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
+{% endblock content %}
